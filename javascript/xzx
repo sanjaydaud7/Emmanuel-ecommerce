@@ -1,0 +1,149 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const signUpButton = document.getElementById("signUpButton");
+    const signInButton = document.getElementById("signInButton");
+    const signInForm = document.getElementById("signIn");
+    const signUpForm = document.getElementById("signup");
+  
+    signUpButton.addEventListener("click", () => toggleForm("signup"));
+    signInButton.addEventListener("click", () => toggleForm("signin"));
+  
+    function toggleForm(formType) {
+      if (formType === "signup") {
+        signInForm.style.display = "none";
+        signUpForm.style.display = "block";
+      } else {
+        signUpForm.style.display = "none";
+        signInForm.style.display = "block";
+      }
+    }
+  
+    // After successful login
+  
+  
+  const signupForm = document.getElementById("signupForm");
+  const loginForm = document.getElementById("loginForm");
+  
+  const API_URL = "http://192.168.0.106:5000/api/auth";
+  
+  // SIGNUP
+  signupForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fName = document.getElementById("fName").value;
+    const lName = document.getElementById("lName").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
+  
+    const response = await fetch(`${API_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fName, lName, email, phone, password }),
+    });
+  
+    const data = await response.json();
+  
+    if (data.status === "success") {
+      alert("Registration successful! Please log in.");
+      signupForm.reset(); // clear fields
+      toggleForm("signin"); // switch to login form
+    } else {
+      alert(data.message || data.error);
+    }
+  });
+  
+  
+  // LOGIN
+  loginForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("emailLogin").value;
+    const password = document.getElementById("passwordLogin").value;
+  
+    const response = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+  
+    const data = await response.json();
+    alert(data.message || data.error);
+    if (data.status === "success") {
+      // Save user info to localStorage
+      localStorage.setItem("loggedInUser", JSON.stringify({ email }));
+  
+      // Redirect to home page or reload
+      window.location.href = "../home.html";
+    }
+  });
+  
+  });
+  
+
+
+
+
+
+
+
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuList = document.getElementById("menuList");
+  
+    // Function to update the menu list dynamically
+    function updateMenuList() {
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      if (loggedInUser && loggedInUser.email) {
+        const profilePhoto = loggedInUser.profilePhoto || "https://via.placeholder.com/40"; // Default profile photo
+        menuList.innerHTML = `
+          <li>
+            <a href="../small/edit-profile.html">
+              <img src="${profilePhoto}" alt="Profile" class="profile-icon" />
+            </a>
+          </li>
+          <li><a href="wishlist.html">Wishlist</a></li>
+          <li><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        `;
+      } else {
+        menuList.innerHTML = `
+          <li><a href="login/login.html">Login/SignUp</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
+          <li><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+        `;
+      }
+    }
+  
+    // Call the function on page load
+    updateMenuList();
+  
+    // LOGIN
+    const loginForm = document.getElementById("loginForm");
+    loginForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("emailLogin").value;
+      const password = document.getElementById("passwordLogin").value;
+  
+      const response = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+      if (data.status === "success") {
+        // Save user info to localStorage with a default profile photo
+        localStorage.setItem(
+          "loggedInUser",
+          JSON.stringify({
+            email,
+            profilePhoto: "https://via.placeholder.com/40", // Default profile photo
+          })
+        );
+  
+        // Update the menu list dynamically
+        updateMenuList();
+  
+        // Redirect to home page or reload
+        window.location.href = "../home.html";
+      }
+    });
+  });
