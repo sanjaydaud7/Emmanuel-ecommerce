@@ -321,10 +321,10 @@ nav ul li a:hover {
 }
 
 /* Product Sections */
-.pro1 { background-color: #493737; }
-.pro2 { background-color: #5e4343; }
-.pro3 { background-color: #493737; }
-.pro4 { background-color: #5e4343; }
+/* .pro1 { background-color: #493737; } */
+/* .pro2 { background-color: #5e4343; } */
+/* .pro3 { background-color: #493737; } */
+/* .pro4 { background-color: #5e4343; } */
 
 .product-section {
     margin: 0;
@@ -337,7 +337,7 @@ nav ul li a:hover {
     justify-content: center;
     margin-bottom: 20px;
     font-size: 24px;
-    color: #ffffff;
+    color: #000000;
 }
 
 .product-wrapper {
