@@ -39,7 +39,7 @@ header {
 .search-bar {
     position: absolute;
     left: 20%;
-    top: 6vh;
+    top: 4vh;
     background: white;
     width: 40vw;
     height: 5vh;
@@ -47,6 +47,14 @@ header {
     display: flex;
     align-items: center;
     padding: 0 1vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.search-bar form {
+    display: flex;
+    width: 100%;
+    align-items: center;
 }
 
 .search-bar input {
@@ -54,15 +62,36 @@ header {
     border-radius: 1.5vh;
     outline: none;
     flex: 1;
-    font-size: 3vh;
+    font-size: 2.5vh;
+    padding: 0 1vw;
+    color: #333;
+}
+
+.search-bar input::placeholder {
+    color: #999;
+    font-size: 2.3vh;
 }
 
 .search-bar button {
-    width: 20%;
-    height: 5vh;
+    width: 15%;
+    height: 4.5vh;
     border: none;
-    border-radius: 2vh;
+    border-radius: 1.5vh;
     cursor: pointer;
+    background: #4CAF50;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background: #45a049;
+}
+
+.search-bar button i {
+    font-size: 2.5vh;
 }
 
 /* Menu List Styling */
@@ -133,8 +162,6 @@ header {
     color: #007bff;
 }
 
-
-
 /* Menu Icon (Hamburger) */
 .menu-icon {
     display: none;
@@ -144,46 +171,6 @@ header {
 .menu-icon i {
     color: white;
     font-size: 3vw;
-}
-
-/* Dropdown Menu for Mobile */
-@media (max-width: 768px) {
-    .menu-icon {
-        display: block;
-    }
-
-    #menuList {
-        position: absolute;
-        top: 13vh;
-        left: 0;
-        width: 100%;
-        background: white;
-        flex-direction: column;
-        max-height: 0;
-        overflow: hidden;
-        gap: 0;
-    }
-
-    #menuList li {
-        width: 100%;
-        border-bottom: 1px solid #eee;
-    }
-
-    #menuList li:last-child {
-        border-bottom: none;
-    }
-
-    #menuList li a,
-    #logoutBtn {
-        padding: 15px;
-        font-size: 1.8vh;
-        justify-content: center;
-    }
-
-    .search-bar {
-        left: 25%;
-        width: 50vw;
-    }
 }
 
 /* Navigation */
@@ -321,11 +308,6 @@ nav ul li a:hover {
 }
 
 /* Product Sections */
-/* .pro1 { background-color: #493737; } */
-/* .pro2 { background-color: #5e4343; } */
-/* .pro3 { background-color: #493737; } */
-/* .pro4 { background-color: #5e4343; } */
-
 .product-section {
     margin: 0;
     padding: 20px;
