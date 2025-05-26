@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const menuList = document.getElementById("menuList");
   const productContainer = document.getElementById("productContainer");
   const recentlyViewedContainer = document.getElementById("recentlyViewedContainer");
@@ -8,249 +8,270 @@ document.addEventListener("DOMContentLoaded", function () {
   const searchQuerySpan = document.getElementById("searchQuery");
   const noResults = document.getElementById("noResults");
 
-  // Product Data
-  let products = [
-    {
-      id: 1,
-      name: "Red Apple",
-      price: "₹120/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg",
-      category: "Fruit",
-      description: "Juicy red apples rich in antioxidants and natural sweetness.",
-      nutrients: ["Vitamin C", "Fiber", "Antioxidants"],
-      calories: "52 kcal per 100g",
-      healthBenefits: "Supports heart health, improves digestion, boosts immunity.",
-      tags: ["Diabetic Friendly", "Best for Snack"]
-    },
-    {
-      id: 2,
-      name: "Banana",
-      price: "₹50/dozen",
-      image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
-      category: "Fruit",
-      description: "Fresh bananas perfect for energy and digestion.",
-      nutrients: ["Potassium", "Vitamin B6", "Fiber"],
-      calories: "89 kcal per 100g",
-      healthBenefits: "Provides energy, regulates blood pressure, aids digestion.",
-      tags: ["Energy Booster", "Kid Friendly"]
-    },
-    {
-      id: 3,
-      name: "Orange",
-      price: "₹80/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg",
-      category: "Fruit",
-      description: "Sweet and tangy oranges packed with Vitamin C.",
-      nutrients: ["Vitamin C", "Folate", "Fiber"],
-      calories: "47 kcal per 100g",
-      healthBenefits: "Boosts immunity, promotes skin health, lowers cholesterol.",
-      tags: ["Best for Juice", "Immunity Booster"]
-    },
-    {
-      id: 4,
-      name: "Grapes",
-      price: "₹90/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/b/bb/Table_grapes_on_white.jpg",
-      category: "Fruit",
-      description: "Seedless grapes ideal for snacking and desserts.",
-      nutrients: ["Vitamin C", "Vitamin K", "Antioxidants"],
-      calories: "67 kcal per 100g",
-      healthBenefits: "Supports heart health, reduces inflammation, improves memory.",
-      tags: ["Snack Friendly", "Rich in Antioxidants"]
-    },
-    {
-      id: 5,
-      name: "Watermelon",
-      price: "₹40/piece",
-      image: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Watermelon_cross_BNC.jpg",
-      category: "Fruit",
-      description: "Cool and hydrating watermelon, a summer favorite.",
-      nutrients: ["Vitamin A", "Vitamin C", "Water"],
-      calories: "30 kcal per 100g",
-      healthBenefits: "Keeps hydrated, soothes muscle soreness, supports eye health.",
-      tags: ["Best for Juice", "Hydrating"]
-    },
-    {
-      id: 6,
-      name: "Pineapple",
-      price: "₹70/piece",
-      image: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Pineapple_and_cross_section.jpg",
-      category: "Fruit",
-      description: "Tropical pineapple with a perfect sweet-tart flavor.",
-      nutrients: ["Vitamin C", "Manganese", "Bromelain"],
-      calories: "50 kcal per 100g",
-      healthBenefits: "Improves digestion, reduces inflammation, strengthens bones.",
-      tags: ["Tropical", "Best for Smoothies"]
-    },
-    {
-      id: 7,
-      name: "Papaya",
-      price: "₹45/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Papaya_cross_section_bnc.jpg",
-      category: "Fruit",
-      description: "Nutritious papaya great for digestion and skin health.",
-      nutrients: ["Vitamin A", "Vitamin C", "Enzymes"],
-      calories: "43 kcal per 100g",
-      healthBenefits: "Aids digestion, promotes skin health, boosts immunity.",
-      tags: ["Skin Care", "Diabetic Friendly"]
-    },
-    {
-      id: 8,
-      name: "Mango",
-      price: "₹150/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg",
-      category: "Fruit",
-      description: "Seasonal Alphonso mangoes with rich, sweet pulp.",
-      nutrients: ["Vitamin A", "Vitamin C", "Folate"],
-      calories: "60 kcal per 100g",
-      healthBenefits: "Improves eye health, supports digestion, rich in antioxidants.",
-      tags: ["Best for Desserts", "Seasonal Favorite"]
-    },
-    {
-      id: 9,
-      name: "Strawberries",
-      price: "₹200/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
-      category: "Fruit",
-      description: "Red ripe strawberries perfect for desserts and shakes.",
-      nutrients: ["Vitamin C", "Manganese", "Antioxidants"],
-      calories: "32 kcal per 100g",
-      healthBenefits: "Boosts immunity, promotes skin health, improves heart health.",
-      tags: ["Best for Shakes", "Kid Friendly"]
-    },
-    {
-      id: 10,
-      name: "Kiwi",
-      price: "₹30/piece",
-      image: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Kiwi_aka.jpg",
-      category: "Fruit",
-      description: "Tangy kiwi fruits full of Vitamin C and fiber.",
-      nutrients: ["Vitamin C", "Vitamin K", "Fiber"],
-      calories: "41 kcal per 100g",
-      healthBenefits: "Boosts immunity, improves digestion, supports heart health.",
-      tags: ["Best for Detox", "Diabetic Friendly"]
-    },
-    {
-      id: 11,
-      name: "Tomato",
-      price: "₹30/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/8/88/Bright_red_tomato_and_cross_section02.jpg",
-      category: "Vegetable",
-      description: "Bright red tomatoes perfect for salads and cooking.",
-      nutrients: ["Vitamin C", "Lycopene", "Potassium"],
-      calories: "18 kcal per 100g",
-      healthBenefits: "Improves heart health, reduces cancer risk, supports skin health.",
-      tags: ["Best for Sauce", "Heart Healthy"]
-    },
-    {
-      id: 12,
-      name: "Potato",
-      price: "₹25/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/6/60/Raw_potatoes.jpg",
-      category: "Vegetable",
-      description: "Starchy potatoes suitable for boiling, baking, or frying.",
-      nutrients: ["Carbohydrates", "Vitamin B6", "Potassium"],
-      calories: "77 kcal per 100g",
-      healthBenefits: "Provides energy, supports nervous system, high satiety.",
-      tags: ["Comfort Food", "Energy Booster"]
-    },
-    {
-      id: 13,
-      name: "Onion",
-      price: "₹28/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Onions.jpg",
-      category: "Vegetable",
-      description: "Flavorful onions that are a base for most dishes.",
-      nutrients: ["Vitamin C", "Antioxidants", "Sulfur Compounds"],
-      calories: "40 kcal per 100g",
-      healthBenefits: "Supports heart health, reduces inflammation, boosts immunity.",
-      tags: ["Flavor Base", "Anti-inflammatory"]
-    },
-    {
-      id: 14,
-      name: "Carrot",
-      price: "₹40/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/04/Carrot.jpg",
-      category: "Vegetable",
-      description: "Crunchy carrots rich in beta-carotene and fiber.",
-      nutrients: ["Beta-Carotene", "Vitamin A", "Fiber"],
-      calories: "41 kcal per 100g",
-      healthBenefits: "Improves vision, supports skin health, aids digestion.",
-      tags: ["Best for Juice", "Eye Health"]
-    },
-    {
-      id: 15,
-      name: "Spinach",
-      price: "₹20/bunch",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/07/Spinacia_oleracea_Spinazie_bloeiend.jpg",
-      category: "Vegetable",
-      description: "Leafy green spinach full of iron and nutrients.",
-      nutrients: ["Iron", "Vitamin K", "Folate"],
-      calories: "23 kcal per 100g",
-      healthBenefits: "Boosts iron levels, supports bone health, improves blood health.",
-      tags: ["Leafy Green", "Anemia Friendly"]
-    },
-    {
-      id: 16,
-      name: "Cauliflower",
-      price: "₹35/piece",
-      image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Cauliflower.JPG",
-      category: "Vegetable",
-      description: "Fresh cauliflower used in curries and stir-fry.",
-      nutrients: ["Vitamin C", "Fiber", "Choline"],
-      calories: "25 kcal per 100g",
-      healthBenefits: "Supports brain health, low in carbs, boosts immunity.",
-      tags: ["Low Carb", "Versatile"]
-    },
-    {
-      id: 17,
-      name: "Cabbage",
-      price: "₹30/piece",
-      image: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Cabbage_and_cross_section_on_white.jpg",
-      category: "Vegetable",
-      description: "Crunchy cabbage great for salads and wraps.",
-      nutrients: ["Vitamin K", "Vitamin C", "Fiber"],
-      calories: "25 kcal per 100g",
-      healthBenefits: "Aids digestion, supports bone health, anti-inflammatory.",
-      tags: ["Best for Salads", "Fermentation Friendly"]
-    },
-    {
-      id: 18,
-      name: "Broccoli",
-      price: "₹60/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/03/Broccoli_and_cross_section_edit.jpg",
-      category: "Vegetable",
-      description: "Green broccoli florets perfect for steaming and sautéing.",
-      nutrients: ["Vitamin C", "Vitamin K", "Fiber", "Folate"],
-      calories: "34 kcal per 100g",
-      healthBenefits: "Fights inflammation, supports immune health, rich in fiber.",
-      tags: ["Cancer Fighter", "Best for Steam"]
-    },
-    {
-      id: 19,
-      name: "Green Peas",
-      price: "₹70/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Green_peas_in_pod.jpg",
-      category: "Vegetable",
-      description: "Tender green peas—sweet and nutritious.",
-      nutrients: ["Protein", "Vitamin K", "Manganese"],
-      calories: "81 kcal per 100g",
-      healthBenefits: "High in protein, supports bone health, boosts metabolism.",
-      tags: ["High Protein", "Good for Kids"]
-    },
-    {
-      id: 20,
-      name: "Brinjal",
-      price: "₹35/kg",
-      image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Aubergine.jpg",
-      category: "Vegetable",
-      description: "Glossy purple brinjal, great for grilling and sabzi.",
-      nutrients: ["Fiber", "Manganese", "Antioxidants"],
-      calories: "25 kcal per 100g",
-      healthBenefits: "Controls blood sugar, supports digestion, rich in antioxidants.",
-      tags: ["Diabetic Friendly", "Best for Grill"]
+  // 25 fallback products (minimal example, add more as needed)
+const fallbackProducts = [
+  {
+    id: 1,
+    name: "Red Apple",
+    price: "₹120/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg",
+    category: "Fruit",
+    description: "Juicy red apples rich in antioxidants and natural sweetness.",
+    nutrients: ["Vitamin C", "Fiber", "Antioxidants"],
+    calories: "52 kcal per 100g",
+    healthBenefits: "Supports heart health;boosts immunity;improves digestion.",
+    tags: ["Diabetic Friendly", "Best for Snack"]
+  },
+  {
+    id: 2,
+    name: "Banana",
+    price: "₹50/dozen",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
+    category: "Fruit",
+    description: "Fresh bananas perfect for energy and digestion.",
+    nutrients: ["Potassium", "Vitamin B6", "Fiber"],
+    calories: "89 kcal per 100g",
+    healthBenefits: "Regulates blood pressure;provides energy;supports digestion.",
+    tags: ["Energy Booster", "Kid Friendly"]
+  },
+  {
+    id: 3,
+    name: "Carrot",
+    price: "₹40/kg",
+    image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2Fycm90fGVufDB8fDB8fHww",
+    category: "Vegetable",
+    description: "Crisp orange carrots packed with beta-carotene and fiber.",
+    nutrients: ["Beta-Carotene", "Vitamin A", "Fiber"],
+    calories: "41 kcal per 100g",
+    healthBenefits: "Improves vision;supports skin health.",
+    tags: ["Best for Juice", "Vision Booster"]
+  },
+  {
+    id: 4,
+    name: "Broccoli",
+    price: "₹90/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/03/Broccoli_and_cross_section_edit.jpg",
+    category: "Vegetable",
+    description: "Nutrient-rich green broccoli florets.",
+    nutrients: ["Vitamin C", "Vitamin K", "Folate"],
+    calories: "34 kcal per 100g",
+    healthBenefits: "Detoxifies body;strengthens bones.",
+    tags: ["Detox", "Bone Health"]
+  },
+  {
+    id: 5,
+    name: "Strawberry",
+    price: "₹180/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
+    category: "Fruit",
+    description: "Sweet and juicy strawberries rich in antioxidants.",
+    nutrients: ["Vitamin C", "Manganese", "Fiber"],
+    calories: "33 kcal per 100g",
+    healthBenefits: "Improves skin;reduces inflammation.",
+    tags: ["Skin Friendly", "Antioxidant Rich"]
+  },
+  {
+    id: 6,
+    name: "Spinach",
+    price: "₹30/bundle",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/08/Spinach_leaves.jpg",
+    category: "Vegetable",
+    description: "Leafy green spinach loaded with iron and vitamins.",
+    nutrients: ["Iron", "Vitamin K", "Magnesium"],
+    calories: "23 kcal per 100g",
+    healthBenefits: "Boosts hemoglobin;strengthens immunity.",
+    tags: ["Iron Rich", "Leafy Green"]
+  },
+  {
+    id: 7,
+    name: "Orange",
+    price: "₹60/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg",
+    category: "Fruit",
+    description: "Citrus fruit rich in Vitamin C and flavor.",
+    nutrients: ["Vitamin C", "Calcium", "Fiber"],
+    calories: "47 kcal per 100g",
+    healthBenefits: "Boosts immunity;reduces fatigue.",
+    tags: ["Immunity Booster", "Juicy"]
+  },
+  {
+    id: 8,
+    name: "Grapes",
+    price: "₹100/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/b/bb/Table_grapes_on_white.jpg",
+    category: "Fruit",
+    description: "Sweet grapes loaded with antioxidants.",
+    nutrients: ["Resveratrol", "Vitamin C", "Potassium"],
+    calories: "69 kcal per 100g",
+    healthBenefits: "Improves heart health;fights aging.",
+    tags: ["Heart Healthy", "Snack Friendly"]
+  },
+  {
+    id: 9,
+    name: "Cucumber",
+    price: "₹25/each",
+    image: "https://upload.wikimedia.org/wikipedia/commons/9/96/Cucumis_sativus_-_Long_cucumber.jpg",
+    category: "Vegetable",
+    description: "Cool and refreshing cucumbers.",
+    nutrients: ["Water", "Vitamin K", "Potassium"],
+    calories: "16 kcal per 100g",
+    healthBenefits: "Hydrates body;good for skin.",
+    tags: ["Hydrating", "Salad Ready"]
+  },
+  {
+    id: 10,
+    name: "Mango",
+    price: "₹150/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/9/90/Hapus_Mango.jpg",
+    category: "Fruit",
+    description: "Delicious tropical mangoes.",
+    nutrients: ["Vitamin A", "Vitamin C", "Beta-Carotene"],
+    calories: "60 kcal per 100g",
+    healthBenefits: "Improves eye health;boosts immunity.",
+    tags: ["Seasonal", "Sweet Treat"]
+  },
+  {
+    id: 11,
+    name: "Pineapple",
+    price: "₹80/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Pineapple_and_cross_section.jpg",
+    category: "Fruit",
+    description: "Tangy and tropical pineapple.",
+    nutrients: ["Vitamin C", "Bromelain", "Manganese"],
+    calories: "50 kcal per 100g",
+    healthBenefits: "Aids digestion;fights inflammation.",
+    tags: ["Digestive Aid", "Tropical"]
+  },
+  {
+    id: 12,
+    name: "Tomato",
+    price: "₹30/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/88/Bright_red_tomato_and_cross_section02.jpg",
+    category: "Vegetable",
+    description: "Red and juicy tomatoes.",
+    nutrients: ["Lycopene", "Vitamin C", "Potassium"],
+    calories: "18 kcal per 100g",
+    healthBenefits: "Good for skin;fights cancer.",
+    tags: ["Salad Favorite", "Lycopene Rich"]
+  },
+  {
+    id: 13,
+    name: "Cauliflower",
+    price: "₹35/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/88/Cauliflower.JPG",
+    category: "Vegetable",
+    description: "White cruciferous veggie full of fiber.",
+    nutrients: ["Vitamin C", "Choline", "Fiber"],
+    calories: "25 kcal per 100g",
+    healthBenefits: "Improves digestion;supports brain health.",
+    tags: ["Brain Food", "Low Carb"]
+  },
+  {
+    id: 14,
+    name: "Lettuce",
+    price: "₹25/bundle",
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Iceberg_lettuce_in_SB.jpg",
+    category: "Vegetable",
+    description: "Crisp green lettuce.",
+    nutrients: ["Vitamin K", "Folate", "Iron"],
+    calories: "15 kcal per 100g",
+    healthBenefits: "Promotes bone strength;good for weight loss.",
+    tags: ["Salad Base", "Weight Friendly"]
+  },
+  {
+    id: 15,
+    name: "Blueberries",
+    price: "₹200/250g",
+    image: "https://upload.wikimedia.org/wikipedia/commons/2/20/Blueberries.jpg",
+    category: "Fruit",
+    description: "Antioxidant-rich berries.",
+    nutrients: ["Vitamin C", "Vitamin K", "Antioxidants"],
+    calories: "57 kcal per 100g",
+    healthBenefits: "Improves memory;reduces aging.",
+    tags: ["Brain Food", "Antioxidant Rich"]
+  },
+  {
+    id: 16,
+    name: "Potato",
+    price: "₹20/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Potatoes.jpg",
+    category: "Vegetable",
+    description: "Starchy root vegetable.",
+    nutrients: ["Carbs", "Vitamin C", "Potassium"],
+    calories: "77 kcal per 100g",
+    healthBenefits: "Provides energy;supports muscle function.",
+    tags: ["Staple Food", "Versatile"]
+  },
+  {
+    id: 17,
+    name: "Peas",
+    price: "₹60/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/44/Green_peas_on_white.jpg",
+    category: "Vegetable",
+    description: "Fresh green peas.",
+    nutrients: ["Protein", "Fiber", "Vitamin K"],
+    calories: "81 kcal per 100g",
+    healthBenefits: "Supports weight loss;builds muscle.",
+    tags: ["Protein Rich", "Snackable"]
+  },
+  {
+    id: 18,
+    name: "Pomegranate",
+    price: "₹120/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/c6/Pomegranate_fruit_-_whole_and_section.jpg",
+    category: "Fruit",
+    description: "Juicy red pomegranate seeds.",
+    nutrients: ["Vitamin C", "Potassium", "Polyphenols"],
+    calories: "83 kcal per 100g",
+    healthBenefits: "Boosts blood flow;improves skin.",
+    tags: ["Heart Healthy", "Skin Booster"]
+  },
+  {
+    id: 19,
+    name: "Watermelon",
+    price: "₹15/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Watermelon_cross_BNC.jpg",
+    category: "Fruit",
+    description: "Refreshing summer fruit.",
+    nutrients: ["Water", "Lycopene", "Vitamin C"],
+    calories: "30 kcal per 100g",
+    healthBenefits: "Hydrates body;reduces blood pressure.",
+    tags: ["Hydrating", "Best for Summer"]
+  },
+  {
+    id: 20,
+    name: "Beetroot",
+    price: "₹45/kg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Beets-Bundle.jpg",
+    category: "Vegetable",
+    description: "Dark purple root veggie.",
+    nutrients: ["Iron", "Nitrates", "Folate"],
+    calories: "43 kcal per 100g",
+    healthBenefits: "Improves blood flow;boosts stamina.",
+    tags: ["Blood Booster", "Juicing"]
+  }
+];
+
+  let products = [];
+
+  // Fetch Products from API
+  async function fetchProducts() {
+    try {
+      const response = await fetch('http://localhost:5000/api/products');
+      if (!response.ok) throw new Error('Failed to fetch products');
+      const fetchedProducts = await response.json();
+      // Merge fallback and fetched products
+      products = [...fetchedProducts, ...fallbackProducts];
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      // Use fallback products only
+      products = [...fallbackProducts];
     }
-  ];
+    loadAllProducts();
+    loadRecentlyViewed();
+    loadPopularProducts();
+    loadSearchResults();
+  }
 
   // Update Menu List
   function updateMenuList() {
@@ -435,48 +456,116 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Search Functionality
-  function loadSearchResults() {
-    if (searchResultsContainer && searchQuerySpan && noResults) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const query = urlParams.get("q")?.trim().toLowerCase() || "";
-      searchQuerySpan.textContent = query || "All Products";
+// ...existing code...
 
-      if (!query) {
-        searchResultsContainer.innerHTML = "";
-        products.forEach(product => {
-          const productDiv = createProductElement(product);
-          searchResultsContainer.appendChild(productDiv);
-        });
-        noResults.style.display = "none";
-        return;
-      }
-
-      const filteredProducts = products.filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.nutrients.some(nutrient => nutrient.toLowerCase().includes(query)) ||
-        product.healthBenefits.toLowerCase().includes(query) ||
-        product.tags.some(tag => tag.toLowerCase().includes(query))
-      );
-
-      searchResultsContainer.innerHTML = "";
-      if (filteredProducts.length > 0) {
-        filteredProducts.forEach(product => {
-          const productDiv = createProductElement(product);
-          searchResultsContainer.appendChild(productDiv);
-        });
-        noResults.style.display = "none";
+// Utility: Simple similarity function (Levenshtein Distance)
+function getLevenshteinDistance(a, b) {
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
       } else {
-        noResults.style.display = "block";
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // substitution
+          matrix[i][j - 1] + 1,     // insertion
+          matrix[i - 1][j] + 1      // deletion
+        );
       }
     }
   }
+  return matrix[b.length][a.length];
+}
 
-  // Initial Loads
+// Utility: Check if two words are similar enough
+function isSimilar(str1, str2) {
+  str1 = str1.toLowerCase();
+  str2 = str2.toLowerCase();
+  if (str1 === str2) return true;
+  // Allow up to 2 edits for short words, 3 for longer
+  const maxDistance = str1.length > 6 ? 3 : 2;
+  return getLevenshteinDistance(str1, str2) <= maxDistance;
+}
+
+// Enhanced Search Functionality
+function loadSearchResults() {
+  if (searchResultsContainer && searchQuerySpan && noResults) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get("q")?.trim().toLowerCase() || "";
+    searchQuerySpan.textContent = query || "All Products";
+
+    if (!query) {
+      searchResultsContainer.innerHTML = "";
+      products.forEach(product => {
+        const productDiv = createProductElement(product);
+        searchResultsContainer.appendChild(productDiv);
+      });
+      noResults.style.display = "none";
+      return;
+    }
+
+    // Main filter: direct match or similar
+    const filteredProducts = products.filter(product => {
+      // Check name, category, description, nutrients, healthBenefits, tags
+      const fields = [
+        product.name,
+        product.category,
+        product.description,
+        ...(Array.isArray(product.nutrients) ? product.nutrients : (product.nutrients || "").split(";")),
+        product.healthBenefits,
+        ...(Array.isArray(product.tags) ? product.tags : (product.tags || "").split(";"))
+      ];
+      return fields.some(field => {
+        if (!field) return false;
+        // Direct match
+        if (field.toLowerCase().includes(query)) return true;
+        // Similarity check for each word in field
+        return field
+          .toLowerCase()
+          .split(/[\s,;]+/)
+          .some(word => isSimilar(word, query));
+      });
+    });
+
+    searchResultsContainer.innerHTML = "";
+    if (filteredProducts.length > 0) {
+      filteredProducts.forEach(product => {
+        const productDiv = createProductElement(product);
+        searchResultsContainer.appendChild(productDiv);
+      });
+      noResults.style.display = "none";
+    } else {
+      // Show preview: closest matches (top 3 by similarity)
+      // Compute similarity score for each product name
+      const scored = products.map(product => {
+        const name = product.name.toLowerCase();
+        const dist = getLevenshteinDistance(name, query);
+        return { product, dist };
+      });
+      scored.sort((a, b) => a.dist - b.dist);
+      const preview = scored.slice(0, 3).map(s => s.product);
+
+      noResults.style.display = "block";
+      if (preview.length > 0) {
+        const previewDiv = document.createElement("div");
+        previewDiv.innerHTML = "<div style='margin:10px 0 5px 0;font-weight:bold;'>Did you mean:</div>";
+        preview.forEach(product => {
+          const productDiv = createProductElement(product);
+          previewDiv.appendChild(productDiv);
+        });
+        searchResultsContainer.appendChild(previewDiv);
+      }
+    }
+  }
+}
+
+// ...existing code...
+
+  // Initialize
   updateMenuList();
-  loadAllProducts();
-  loadRecentlyViewed();
-  loadPopularProducts();
-  loadSearchResults();
+  await fetchProducts(); // Fetch products and load all sections
 });

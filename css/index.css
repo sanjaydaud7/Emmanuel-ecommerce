@@ -101,9 +101,9 @@ header {
     padding: 0;
     background: #e3dbdb;
     display: flex;
-    gap: 5vw;
+    gap: 3vw;
     position: absolute;
-    left: 70vw;
+    left: 72vw;
     width: 20vw;
     z-index: 100;
     transition: max-height 0.3s ease-in-out;
@@ -115,10 +115,11 @@ header {
 }
 
 #menuList li a {
-    color: rgb(86, 182, 30);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 2.3em;
-    font-weight: 500;
+    /* font-weight: 500; */
+    font-weight: bolder;
     padding: 1px;
     display: flex;
     align-items: center;
@@ -126,7 +127,7 @@ header {
 }
 
 #menuList li a:hover {
-    color: #007bff;
+    color: #3e793e;
 }
 
 /* Profile Icon */
@@ -142,11 +143,11 @@ header {
 /* Cart Icon */
 #menuList li a i.fa-cart-shopping {
     font-size: 2.5vh;
-    color: rgb(86, 182, 30);
+      color: rgb(255, 255, 255);
 }
 
 #menuList li a:hover i.fa-cart-shopping {
-    color: #007bff;
+    color: #3e793e;
 }
 
 /* Logout Button */
@@ -195,13 +196,13 @@ nav ul {
 
 nav ul li a {
     text-decoration: none;
-    font-weight: bold;
+    font-weight: bolder;
     color: black;
     font-size: 3vh;
 }
 
 nav ul li a:hover {
-    color: #007bff;
+    color: #21787e;
 }
 
 /* Offer Bar */
@@ -333,6 +334,7 @@ nav ul li a:hover {
     -ms-overflow-style: none;
     scrollbar-width: none;
     margin-left: 2vw;
+    
 }
 
 .product-wrapper::-webkit-scrollbar {
